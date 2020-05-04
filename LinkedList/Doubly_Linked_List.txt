@@ -1,0 +1,212 @@
+//keep in mind while insert at last  or  delete the last one 
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class node {
+public :
+int val ;
+node * next;
+node * prev;
+};
+node * head = NULL;
+
+void create()
+{
+   cout<<"enter the number of values to insert"<<endl;
+   int n,mj;
+   cin>>n;
+   cout<<"enter the values"<<endl;
+   node * p ;
+   for(int i=0;i<n;i++)
+   {
+     cin>>mj;
+     if(head == NULL)
+     {
+       node* temp=new node();
+       temp->val =mj;
+       temp->next = NULL;
+       temp->prev = NULL;
+       head = temp;
+       p = temp;
+     }
+     else
+     {
+       node* temp=new node();
+       temp->val =mj;
+       temp->next = NULL;
+       temp->prev = p;
+       p->next = temp;
+       p = p->next;
+     }
+   }
+}
+
+void show()
+{
+  node * p = head;
+  while(p!=NULL)
+  {
+    cout<<p->val<<" ";
+    p = p->next;
+  }
+  cout<<endl;
+}
+
+void reverse_show()
+{
+  node * p = head;
+  while(p->next!=NULL)
+  {
+   // cout<<p->val<<" ";
+    p = p->next;
+  }
+ while(p!=NULL)
+  {
+    cout<<p->val<<" ";
+    p = p->prev;
+  }
+  cout<<endl;
+}
+
+void update()
+{
+  node * p = head;
+  while(p!=NULL)
+  {
+    if(p->val %2 == 0)
+     p->val = 0;
+     p = p->next;
+  } 
+}
+int length()
+{
+  node * p = head;
+  int mj = 0;
+  while(p!=NULL)
+  {
+      mj++;
+     p = p->next;
+  }
+  return mj; 
+}
+void insert()
+{
+  int j,pos;
+  cout<<"enter the number to insert and position to insert "<<endl;
+  cin>>j>>pos;
+  int mjj = length();
+  //cout<<mjj<<endl;
+  if(pos<1 || pos>mjj+1)
+  {cout<<"enter a valid position "<<endl;}
+  else
+  {
+     if(pos == 1)
+      {
+       // cout<<"hi"<<endl;
+        node* temp = new node();
+        temp->next = head;
+        temp->val = j;
+        head->prev = temp;
+        temp->prev = NULL;
+        head = temp;
+      }
+     else
+     {
+         node * p = head;
+         pos-=2;
+         while(pos--)
+          p = p->next;
+          node * a = p;
+          node * b = p->next;
+          node* temp= new node();
+          temp->next = b;
+          temp->prev = a;
+          temp->val = j;
+          a->next = temp;
+          if(b!=NULL)
+          b->prev = temp;
+     }
+  }
+ 
+
+}
+
+void deletee()
+{
+  cout<<"enter the position to delete"<<endl;
+  int pos;
+ /// cout<<"enter the number to insert and position to insert "<<endl;
+  cin>>pos;
+  int mjj = length();
+  //cout<<mjj<<endl;
+  if(pos<1 || pos>mjj)
+  {cout<<"enter a valid position "<<endl;}
+  else
+  {
+    if(pos == 1)
+      {
+       // cout<<"hi"<<endl;
+        node* temp = head;
+        head = head->next;
+        delete temp;
+        head->prev = NULL;
+      }
+      else
+     {
+         node * p = head;
+         pos-=2;
+         while(pos--)
+          p = p->next;
+          node * a = p;
+          node * b = p->next;
+          node *c = b->next;
+          delete b;
+          a->next=c;
+          if(c!=NULL)
+          c->prev = a;
+      }
+  }
+}
+
+int main()
+{
+  char mj='y';
+  while(mj == 'y' || mj == 'Y')
+  {     cout<<"1 to create list"<<endl;
+     cout<<"2 to insert"<<endl;
+     cout<<"3 to delete"<<endl;
+     cout<<"4 to show "<<endl;   
+     cout<<"5 to update"<<endl;
+     cout<<"6 to reverse_show "<<endl;   
+     int choice;
+     cout<<"enter your choice "<<endl;
+     cin>>choice;
+     switch(choice)
+     {
+        case 1 : 
+           create();
+           break;
+        case 2 : 
+           insert();
+           break;
+        case 3 : 
+           deletee();
+           break;
+        case 4 : 
+           show();
+           break;
+        case 5 : 
+           update();
+        case 6 : 
+           reverse_show();
+           break;
+        default :
+            cout<<"incorrect choice"<<endl;
+     }
+     cout<<"do you want to continue"<<endl;
+     cin>>mj;
+  }
+return 0;
+}
